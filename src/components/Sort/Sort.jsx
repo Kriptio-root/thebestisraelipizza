@@ -4,7 +4,7 @@ import './_sort.scss'
 
 function Sort() {
     const [isOpen, setOpen] = React.useState(false)
-    const [isSelected, setIsSelected] = React.useState(false)
+    const [isSelected, setIsSelected] = React.useState(0)
 
 
     const list = ['popularity', 'price', 'alphabet']
