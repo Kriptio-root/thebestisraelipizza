@@ -29,9 +29,10 @@ import axios from "axios";
         }
 
         fetchData();
+        window.scrollTo(0,0)
     }, [])
     return (
-        <>
+        <div className="container">
             {isLoading?'Loading...':''}
             <div className="content__top">
                 <Categories></Categories>
@@ -44,7 +45,7 @@ import axios from "axios";
                         : items.map((obj) => <PizzaBlock key={obj.id} {...obj}></PizzaBlock>)
                 }
             </div>
-        </>
+        </div>
     )
 }
 export default Home

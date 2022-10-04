@@ -8,9 +8,9 @@ function Header() {
                 <Link to='/'>
                 <div className="header__logo">
                     <img width="38" src="./img/pizza-logo.svg" alt="Pizza logo"/>
-                    <div>
-                        <h1>The best israeli Pizza</h1>
-                        <p>The tastiest pizza in israel!</p>
+                    <div className="header__logo-text">
+                        <h1 className="header__logo-text--header">The best israeli Pizza</h1>
+                        <p className="header__logo-text--paragraph">The tastiest pizza in israel!</p>
                     </div>
                 </div>
                 </Link>

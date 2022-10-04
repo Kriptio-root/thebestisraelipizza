@@ -30,3 +30,15 @@
     }
   }
 }
+@media (max-width: 767px){
+  .header{
+    &__logo{
+      &-text{
+        justify-content: center;
+        align-items: center;
+        align-self: center;
+        text-align: center;
+      }
+    }
+  }
+}
