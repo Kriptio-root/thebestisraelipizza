@@ -2,25 +2,19 @@ import React from 'react'
 
 import './_categories.scss'
 
-function Categories() {
-    const [activeIndex, setActiveIndex] = React.useState(0);
-
+function Categories({val,onChangeCategory}) {
     const categories = ['All', 'Meat', 'Vegan', 'Grill', 'Hot Spice', 'Closed']
-
-    const onClickCategory = event => {
-        setActiveIndex(Number(event.currentTarget.id))
-    }
 
     return (
         <div className="categories">
             <ul>
-                {categories.map((value, index) => {
+                {categories.map((categoryName, index) => {
                     return <li
                         key={index.toString()}
                         id={index.toString()}
-                        onClick={onClickCategory}
-                        className={Number(activeIndex) === Number(index) ? "active" : ''}>
-                        {value.toString()}
+                        onClick={() => onChangeCategory(index)}
+                        className={Number(val) === Number(index) ? "active" : ''}>
+                        {categoryName.toString()}
                     </li>
                 })}
             </ul>

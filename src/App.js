@@ -9,19 +9,26 @@ import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import Cart from "./pages/Cart";
 
+export const SearchContext = React.createContext('')
+
 function App() {
-    return (<div className="App">
+    const  [searchValue,setSearchValue]=React.useState('')
+
+    return (
+        <div className="App">
         <div className="wrapper">
-            <Header></Header>
-            <div className="content">
-                    <Routes>
-                        <Route exac path='/' element={<Home/>}></Route>
-                        <Route exac path='/cart' element={<Cart/>}></Route>
-                        <Route path='*' element={<NotFound/>}></Route>
-                    </Routes>
-            </div>
+<SearchContext.Provider value={{searchValue,setSearchValue}}>
+    <Header></Header>
+    <div className="content">
+        <Routes>
+            <Route exac path='/' element={<Home/>}></Route>
+            <Route exac path='/cart' element={<Cart/>}></Route>
+            <Route path='*' element={<NotFound/>}></Route>
+        </Routes>
+    </div>
+</SearchContext.Provider>
         </div>
-    </div>);
-}
+    </div>
+    )}
 
 export default App;
