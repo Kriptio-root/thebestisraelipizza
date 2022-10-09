@@ -38,7 +38,6 @@ import {setCategoryId, setCurrentPage, setFilters} from "../redux/slices/filterS
       }
 
      React.useEffect(() => {
-         console.log(isMounted.current)
          if (isMounted.current){
              const queryString = qs.stringify({
                  sortType:sortType.sortProperty,

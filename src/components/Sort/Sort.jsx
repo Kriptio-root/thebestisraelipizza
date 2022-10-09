@@ -9,15 +9,29 @@ function Sort() {
     const sortType = useSelector(state => state.filter.sortProperty)
     const [isOpen, setIsOpen] = React.useState(false)
     const sortList = useSelector((state) => state.filter.sortList)
+    const sortRef = React.useRef();
 
     function SortUI(obj) {
         dispatch(setSort(obj))
         setIsOpen(!isOpen)
     }
 
+    React.useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (!event.path.includes(sortRef.current)){
+                setIsOpen(false)
+            }
+        }
+
+        document.body.addEventListener('click',handleClickOutside)
+
+        return () => {
+            document.body.removeEventListener('click',handleClickOutside)
+        }
+    },[])
 
     return (
-        <div className="sort">
+        <div ref={sortRef} className="sort">
             <div className="sort__label">
                 <svg
                     width="10"
@@ -37,7 +51,6 @@ function Sort() {
             {isOpen && <div className="sort__popup">
                 <ul>
                     {sortList.map((obj, i) => (
-                        console.log(sortType),
                         <li key={i}
                             onClick={() => SortUI(obj)}
                             className={sortType.sortProperty.toString() === obj.sortProperty.toString() ? 'active' : ''}>
