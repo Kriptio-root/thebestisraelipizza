@@ -28,9 +28,8 @@ const Home = () => {
     const sortType = useSelector((state) => state.filter.sortProperty)
     const currentPage = useSelector((state) => state.filter.currentPage)
     const sortList = useSelector(state => state.filter.sortList)
+    const searchValue = useSelector(state => state.filter.searchValue)
     const {items, status} = useSelector(state => state.pizza)
-
-    const {searchValue} = React.useContext(SearchContext)
 
     const onChangeCategory = (id) => {
         dispatch(setCategoryId(id))
@@ -49,7 +48,7 @@ const Home = () => {
             navigate(`?${queryString}`)
         }
         isMounted.current = true
-    }, [])
+    }, [searchValue,navigate,categoryId,sortType.sortProperty,currentPage])
 //[navigate,categoryId,sortType.sortProperty,currentPage]
     React.useEffect(() => {
         if (window.location.search) {
@@ -63,7 +62,7 @@ const Home = () => {
             )
             isSearch.current = true
         }
-    }, [])
+    }, [searchValue,navigate,categoryId,sortType.sortProperty,currentPage])
 
     React.useEffect(() => {
         window.scrollTo(0, 0)
@@ -73,6 +72,7 @@ const Home = () => {
             const order = sortType.sortProperty.toString().includes('-') ? 'asc' : 'desc'
             const category = categoryId > 0 ? `category=${categoryId}` : ''
             const search = searchValue ? `&search=${searchValue}` : ''
+            console.log(order)
             dispatch(fetchPizzas({
                 sortBy,
                 order,
@@ -88,12 +88,12 @@ const Home = () => {
         }
         isSearch.current = false
 
-    }, [])
+    }, [searchValue,navigate,categoryId,sortType.sortProperty,currentPage])
 
 
     console.log(items)
 
-    const pizzasComp = items.map((obj) => <PizzaBlock key={obj.id} {...obj}/>)
+    const pizzasComp = items.map((obj) =><Link key={obj.id} to={`/pizza/${obj.id}`}><PizzaBlock {...obj}/></Link> )
 
     const skeletonsComp = pizzas.map((obj) => <Skeleton key={obj.id}/>)
 

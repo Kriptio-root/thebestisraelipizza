@@ -1,5 +1,5 @@
 import React from "react";
-import {Route, Routes} from "react-router-dom";
+import {Outlet, Route, Routes} from "react-router-dom";
 
 import './common/styles/app.scss'
 
@@ -8,31 +8,27 @@ import Header from "./components/Header/Header";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import Cart from "./pages/Cart";
+import FullPizza from "./pages/FullPizza";
+
 import {useDispatch, useSelector} from "react-redux";
+import MainLayout from "./layouts/MainLayout";
 
 export const SearchContext = React.createContext('')
 
 function App() {
-    const  [searchValue,setSearchValue]=React.useState('')
 
     const filter = useSelector((state) => state.filter.value)
     const dispatch = useDispatch()
 
     return (
-        <div className="App">
-        <div className="wrapper">
-<SearchContext.Provider value={{searchValue,setSearchValue}}>
-    <Header></Header>
-    <div className="content">
         <Routes>
-            <Route exac path='/' element={<Home/>}></Route>
-            <Route exac path='/cart' element={<Cart/>}></Route>
-            <Route path='*' element={<NotFound/>}></Route>
+        <Route path='/' element={<MainLayout/>}>
+            <Route exac path='' element={<Home/>} />
+            <Route exac path='cart' element={<Cart/>} />
+            <Route path='pizza/:id' element={<FullPizza/>} />
+            <Route path='*' element={<NotFound/>} />
+        </Route>
         </Routes>
-    </div>
-</SearchContext.Provider>
-        </div>
-    </div>
     )}
 
 export default App;
