@@ -4,7 +4,7 @@ import './_categories.scss'
 
 type CategoriesProps ={
     val:number,
-    onChangeCategory:any
+    onChangeCategory:(i:number)=>void
 }
 
 const Categories:React.FunctionComponent<CategoriesProps> = ({val, onChangeCategory}) => {

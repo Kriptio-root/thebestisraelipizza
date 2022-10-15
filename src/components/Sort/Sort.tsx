@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {setSort, sortListState} from "../../redux/slices/filterSlice";
 import {RootState} from "../../redux/store";
 
-function Sort() {
+const Sort:React.FunctionComponent=()=> {
     const dispatch = useDispatch()
     const sortType = useSelector((state:RootState) => state.filter.sortProperty)
     const [isOpen, setIsOpen] = React.useState(false)
@@ -18,8 +18,11 @@ function Sort() {
     }
 
     React.useEffect(() => {
-        const handleClickOutside = (event:any) => {
-            if (!event.path.includes(sortRef.current)){
+        const handleClickOutside = (event:MouseEvent) => {
+            const _event = event as MouseEvent & {
+                path:Node[]
+            }
+            if (sortRef.current&&!_event.path.includes(sortRef.current)){
                 setIsOpen(false)
             }
         }

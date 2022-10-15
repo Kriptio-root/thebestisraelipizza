@@ -10,7 +10,8 @@ const Search:React.FunctionComponent = () => {
     const [value, setValue] = React.useState('')
     const inputRef = React.useRef<HTMLInputElement>(null)
 
-    const onClickClear = () => {
+    const onClickClear = (event:React.MouseEvent<SVGSVGElement>) => {
+        console.log(event)
         dispatch(setSearchValue(''))
         setValue('')
             inputRef.current?.focus()
@@ -24,7 +25,7 @@ const Search:React.FunctionComponent = () => {
         [],
     )
 
-    const onChangeInput = (event:any) => {
+    const onChangeInput = (event:React.ChangeEvent<HTMLInputElement>) => {
         setValue(event.target.value)
         updateSearchValue(event.target.value)
     }

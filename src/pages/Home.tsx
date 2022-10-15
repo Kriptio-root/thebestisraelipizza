@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import qs from "qs"
 import {useDispatch, useSelector} from 'react-redux'
 import {Link, useNavigate} from "react-router-dom";
@@ -12,9 +11,8 @@ import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
 import Pagination from "../components/Pagination/Pagination";
 import {setCategoryId, setCurrentPage, setFilters} from "../redux/slices/filterSlice";
 import {fetchPizzas} from "../redux/slices/pizzasSlice";
-import styles from "../components/CartEmpty/cartEmpty.module.scss";
 import ErrorBlock from "../components/ErrorBlock/ErrorBlock";
-import {AppDispatch, RootState} from "../redux/store";
+import { RootState } from "../redux/store";
 
 const Home:React.FunctionComponent = () => {
     const navigate = useNavigate()
