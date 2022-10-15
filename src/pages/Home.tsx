@@ -10,13 +10,13 @@ import pizzas from "../components/Skeleton/pizza.json";
 import Skeleton from "../components/Skeleton/Skeleton";
 import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
 import Pagination from "../components/Pagination/Pagination";
-import {SearchContext} from "../App";
 import {setCategoryId, setCurrentPage, setFilters} from "../redux/slices/filterSlice";
 import {fetchPizzas} from "../redux/slices/pizzasSlice";
 import styles from "../components/CartEmpty/cartEmpty.module.scss";
 import ErrorBlock from "../components/ErrorBlock/ErrorBlock";
+import {AppDispatch, RootState} from "../redux/store";
 
-const Home = () => {
+const Home:React.FunctionComponent = () => {
     const navigate = useNavigate()
 
     const dispatch = useDispatch()
@@ -24,17 +24,17 @@ const Home = () => {
     const isSearch = React.useRef(false)
     const isMounted = React.useRef(false)
 
-    const categoryId = useSelector(state => state.filter.categoryId)
-    const sortType = useSelector((state) => state.filter.sortProperty)
-    const currentPage = useSelector((state) => state.filter.currentPage)
-    const sortList = useSelector(state => state.filter.sortList)
-    const searchValue = useSelector(state => state.filter.searchValue)
-    const {items, status} = useSelector(state => state.pizza)
+    const categoryId = useSelector((state:RootState) => state.filter.categoryId)
+    const sortType = useSelector((state:RootState) => state.filter.sortProperty)
+    const currentPage = useSelector((state:RootState) => state.filter.currentPage)
+    const sortList = useSelector((state:RootState) => state.filter.sortList)
+    const searchValue = useSelector((state:RootState) => state.filter.searchValue)
+    const {items, status} = useSelector((state:RootState) => state.pizza)
 
-    const onChangeCategory = (id) => {
+    const onChangeCategory = (id:number) => {
         dispatch(setCategoryId(id))
     }
-    const onChangePage = num => {
+    const onChangePage = (num:number) => {
         dispatch(setCurrentPage(num))
     }
 
@@ -73,6 +73,7 @@ const Home = () => {
             const category = categoryId > 0 ? `category=${categoryId}` : ''
             const search = searchValue ? `&search=${searchValue}` : ''
             console.log(order)
+            // @ts-ignore
             dispatch(fetchPizzas({
                 sortBy,
                 order,
@@ -93,7 +94,7 @@ const Home = () => {
 
     console.log(items)
 
-    const pizzasComp = items.map((obj) =><Link key={obj.id} to={`/pizza/${obj.id}`}><PizzaBlock {...obj}/></Link> )
+    const pizzasComp = items.map((obj:any) =><Link key={obj.id} to={`/pizza/${obj.id}`}><PizzaBlock {...obj}/></Link> )
 
     const skeletonsComp = pizzas.map((obj) => <Skeleton key={obj.id}/>)
 
@@ -101,7 +102,7 @@ const Home = () => {
         <div className="container">
             {status === 'loading' ? 'Loading...' : ''}
             <div className="content__top">
-                <Categories val={categoryId} onChangeCategory={(i) => onChangeCategory(i)}></Categories>
+                <Categories val={categoryId} onChangeCategory={(i:number) => onChangeCategory(i)}></Categories>
                 <Sort></Sort>
             </div>
             <h2 className="content__title">All pizzas</h2>

@@ -2,7 +2,12 @@ import React from 'react'
 
 import './_categories.scss'
 
-function Categories({val,onChangeCategory}) {
+type CategoriesProps ={
+    val:number,
+    onChangeCategory:any
+}
+
+const Categories:React.FunctionComponent<CategoriesProps> = ({val, onChangeCategory}) => {
     const categories = ['All', 'Meat', 'Vegan', 'Grill', 'Hot Spice', 'Closed']
 
     return (

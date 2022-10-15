@@ -4,13 +4,25 @@ import {useDispatch,useSelector} from "react-redux";
 import  {addItem} from "../../redux/slices/cartSlice";
 
 import './_pizza-block.scss'
+import {RootState} from "../../redux/store";
 
-function PizzaBlock({id,title,price,imageUrl,types,category,rating,sizes}){
+type PizzaBlock ={
+    id:string,
+    title:string,
+    price:number,
+    imageUrl:string,
+    types:number[],
+    category:number,
+    rating:number,
+    sizes:number[]
+}
+
+const PizzaBlock:React.FunctionComponent<PizzaBlock>=({id,title,price,imageUrl,types,category,rating,sizes})=>{
     const [activeType,setActiveType] = React.useState(0)
     const [activeSize,setActiveSize] = React.useState(0)
 
     const dispatch=useDispatch()
-    const cartItem = useSelector(state => state.cart.items.find((obj) => obj.id == id))
+    const cartItem:any = useSelector((state:RootState) => state.cart.items.find((obj:any) => obj.id == id))
     const typeNames =['thin','regular']
     const addedCount = cartItem ? cartItem.count : 0
 

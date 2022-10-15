@@ -2,22 +2,23 @@ import React from "react";
 
 import './_sort.scss'
 import {useDispatch, useSelector} from "react-redux";
-import {setSort} from "../../redux/slices/filterSlice";
+import {setSort, sortListState} from "../../redux/slices/filterSlice";
+import {RootState} from "../../redux/store";
 
 function Sort() {
     const dispatch = useDispatch()
-    const sortType = useSelector(state => state.filter.sortProperty)
+    const sortType = useSelector((state:RootState) => state.filter.sortProperty)
     const [isOpen, setIsOpen] = React.useState(false)
-    const sortList = useSelector((state) => state.filter.sortList)
-    const sortRef = React.useRef();
+    const sortList = useSelector((state:RootState) => state.filter.sortList)
+    const sortRef = React.useRef<HTMLDivElement>(null);
 
-    function SortUI(obj) {
+    function SortUI(obj: sortListState) {
         dispatch(setSort(obj))
         setIsOpen(!isOpen)
     }
 
     React.useEffect(() => {
-        const handleClickOutside = (event) => {
+        const handleClickOutside = (event:any) => {
             if (!event.path.includes(sortRef.current)){
                 setIsOpen(false)
             }

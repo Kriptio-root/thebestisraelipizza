@@ -1,10 +1,10 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import styles from './cartEmpty.module.scss'
-const CartEmpty = () => {
+const CartEmpty:React.FunctionComponent = () => {
     return(
         <div className="cart cart--empty">
-            <h2>Cart is empty <icon>😕</icon></h2>
+            <h2>Cart is empty <span>😕</span></h2>
             <p>
                 You don't added any pizza yet<br/>
                 To add pizza to cart go to <span className={styles.root}><Link to="/">main page</Link></span>

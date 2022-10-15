@@ -43,6 +43,7 @@ export const cartSlice = createSlice({
 
         },
         minusItem(state, action){
+            state.items = state.items.filter((obj) => obj.count !== 0)
             const findItem = state.items.find(obj => obj.id === action.payload)
             if(findItem){
                 findItem.count--
