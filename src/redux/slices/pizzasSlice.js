@@ -1,6 +1,7 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
 
+
 export const fetchPizzas = createAsyncThunk(
     'pizza/fetchPizzasStatus',
     async (params) => {
@@ -11,11 +12,9 @@ export const fetchPizzas = createAsyncThunk(
             search,
             currentPage
         } = params
-        const { data } = await axios.get(
+        const {data} = await axios.get(
             `https://63388ad3937ea77bfdc19517.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`
         )
-        console.log('itemsResponse')
-        console.log(data)
         return data
     })
 
@@ -32,20 +31,25 @@ export const pizzaSlice = createSlice({
             state.items = action.payload
         },
     },
-    extraReducers: {
-        [fetchPizzas.pending]: (state, action) => {
-            state.status = 'loading'
-            state.items = []
-        },
-        [fetchPizzas.fulfilled]: (state, action) => {
-            console.log(action)
-            state.items = action.payload
-            state.status = 'success'
-        },
-        [fetchPizzas.rejected]: (state, action) => {
-            state.status = 'It was error while sending...'
-            state.items = []
-        },
+    extraReducers: (builder) => {
+        builder.addCase(fetchPizzas.pending,
+            (state) => {
+                state.status = 'loading'
+                state.items = []
+            }
+        )
+            builder.addCase(fetchPizzas.fulfilled,
+                (state, action) => {
+                    state.items = action.payload
+                    state.status = 'success'
+                }
+            )
+            builder.addCase(fetchPizzas.rejected,
+                (state) => {
+                    state.status = 'It was error while sending...'
+                    state.items = []
+                }
+            )
     }
 })
 

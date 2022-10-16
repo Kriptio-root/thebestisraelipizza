@@ -5,11 +5,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {setSort, sortListState} from "../../redux/slices/filterSlice";
 import {RootState} from "../../redux/store";
 
-const Sort:React.FunctionComponent=()=> {
+const Sort: React.FunctionComponent = () => {
     const dispatch = useDispatch()
-    const sortType = useSelector((state:RootState) => state.filter.sortProperty)
+    const sortType = useSelector((state: RootState) => state.filter.sortProperty)
     const [isOpen, setIsOpen] = React.useState(false)
-    const sortList = useSelector((state:RootState) => state.filter.sortList)
+    const sortList = useSelector((state: RootState) => state.filter.sortList)
     const sortRef = React.useRef<HTMLDivElement>(null);
 
     function SortUI(obj: sortListState) {
@@ -18,21 +18,21 @@ const Sort:React.FunctionComponent=()=> {
     }
 
     React.useEffect(() => {
-        const handleClickOutside = (event:MouseEvent) => {
+        const handleClickOutside = (event: MouseEvent) => {
             const _event = event as MouseEvent & {
-                path:Node[]
+                path: Node[]
             }
-            if (sortRef.current&&!_event.path.includes(sortRef.current)){
+            if (sortRef.current && !_event.path.includes(sortRef.current)) {
                 setIsOpen(false)
             }
         }
 
-        document.body.addEventListener('click',handleClickOutside)
+        document.body.addEventListener('click', handleClickOutside)
 
         return () => {
-            document.body.removeEventListener('click',handleClickOutside)
+            document.body.removeEventListener('click', handleClickOutside)
         }
-    },[])
+    }, [])
 
     return (
         <div ref={sortRef} className="sort">

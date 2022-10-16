@@ -12,9 +12,9 @@ import Pagination from "../components/Pagination/Pagination";
 import {setCategoryId, setCurrentPage, setFilters} from "../redux/slices/filterSlice";
 import {fetchPizzas} from "../redux/slices/pizzasSlice";
 import ErrorBlock from "../components/ErrorBlock/ErrorBlock";
-import { RootState } from "../redux/store";
+import {RootState} from "../redux/store";
 
-const Home:React.FunctionComponent = () => {
+const Home: React.FunctionComponent = () => {
     const navigate = useNavigate()
 
     const dispatch = useDispatch()
@@ -22,17 +22,17 @@ const Home:React.FunctionComponent = () => {
     const isSearch = React.useRef(false)
     const isMounted = React.useRef(false)
 
-    const categoryId = useSelector((state:RootState) => state.filter.categoryId)
-    const sortType = useSelector((state:RootState) => state.filter.sortProperty)
-    const currentPage = useSelector((state:RootState) => state.filter.currentPage)
-    const sortList = useSelector((state:RootState) => state.filter.sortList)
-    const searchValue = useSelector((state:RootState) => state.filter.searchValue)
-    const {items, status} = useSelector((state:RootState) => state.pizza)
+    const categoryId = useSelector((state: RootState) => state.filter.categoryId)
+    const sortType = useSelector((state: RootState) => state.filter.sortProperty)
+    const currentPage = useSelector((state: RootState) => state.filter.currentPage)
+    const sortList = useSelector((state: RootState) => state.filter.sortList)
+    const searchValue = useSelector((state: RootState) => state.filter.searchValue)
+    const {items, status} = useSelector((state: RootState) => state.pizza)
 
-    const onChangeCategory = (id:number) => {
+    const onChangeCategory = React.useCallback((id: number) => {
         dispatch(setCategoryId(id))
-    }
-    const onChangePage = (num:number) => {
+    }, [])
+    const onChangePage = (num: number) => {
         dispatch(setCurrentPage(num))
     }
 
@@ -46,7 +46,7 @@ const Home:React.FunctionComponent = () => {
             navigate(`?${queryString}`)
         }
         isMounted.current = true
-    }, [searchValue,navigate,categoryId,sortType.sortProperty,currentPage])
+    }, [searchValue, navigate, categoryId, sortType.sortProperty, currentPage])
 //[navigate,categoryId,sortType.sortProperty,currentPage]
     React.useEffect(() => {
         if (window.location.search) {
@@ -60,7 +60,7 @@ const Home:React.FunctionComponent = () => {
             )
             isSearch.current = true
         }
-    }, [searchValue,navigate,categoryId,sortType.sortProperty,currentPage])
+    }, [searchValue, navigate, categoryId, sortType.sortProperty, currentPage])
 
     React.useEffect(() => {
         window.scrollTo(0, 0)
@@ -70,7 +70,6 @@ const Home:React.FunctionComponent = () => {
             const order = sortType.sortProperty.toString().includes('-') ? 'asc' : 'desc'
             const category = categoryId > 0 ? `category=${categoryId}` : ''
             const search = searchValue ? `&search=${searchValue}` : ''
-            console.log(order)
             // @ts-ignore
             dispatch(fetchPizzas({
                 sortBy,
@@ -87,12 +86,9 @@ const Home:React.FunctionComponent = () => {
         }
         isSearch.current = false
 
-    }, [searchValue,navigate,categoryId,sortType.sortProperty,currentPage])
+    }, [searchValue, navigate, categoryId, sortType.sortProperty, currentPage])
 
-
-    console.log(items)
-
-    const pizzasComp = items.map((obj:any) =><Link key={obj.id} to={`/pizza/${obj.id}`}><PizzaBlock {...obj}/></Link> )
+    const pizzasComp = items.map((obj: any) => <Link key={obj.id} to={`/pizza/${obj.id}`}><PizzaBlock {...obj}/></Link>)
 
     const skeletonsComp = pizzas.map((obj) => <Skeleton key={obj.id}/>)
 
@@ -100,7 +96,7 @@ const Home:React.FunctionComponent = () => {
         <div className="container">
             {status === 'loading' ? 'Loading...' : ''}
             <div className="content__top">
-                <Categories val={categoryId} onChangeCategory={(i:number) => onChangeCategory(i)}></Categories>
+                <Categories val={categoryId} onChangeCategory={(i: number) => onChangeCategory(i)}></Categories>
                 <Sort></Sort>
             </div>
             <h2 className="content__title">All pizzas</h2>

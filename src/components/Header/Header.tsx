@@ -3,11 +3,17 @@ import {Link, useLocation} from "react-router-dom";
 import Search from "../Search/Search";
 import {useSelector} from "react-redux";
 import {selectCart} from "../../redux/slices/cartSlice";
+import React from "react";
 
 function Header() {
     const {items,totalPrice} = useSelector(selectCart)
     const totalCount = items.reduce((sum:number,item:any) => sum + item.count,0)
     const location = useLocation()
+
+    React.useEffect(()=>{
+        const  json =JSON.stringify(items)
+        console.log(json)
+    },[items])
 
     return(
         <div className="header">
@@ -21,7 +27,7 @@ function Header() {
                     </div>
                 </div>
                 </Link>
-                <Search></Search>
+                {location.pathname!='/cart'&& <Search/>}
                 <div className="header__cart">
                 {location.pathname!=='/cart'?
                     <Link to="/cart" className="button button--cart">

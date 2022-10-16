@@ -7,24 +7,26 @@ type CategoriesProps ={
     onChangeCategory:(i:number)=>void
 }
 
-const Categories:React.FunctionComponent<CategoriesProps> = ({val, onChangeCategory}) => {
-    const categories = ['All', 'Meat', 'Vegan', 'Grill', 'Hot Spice', 'Closed']
+const Categories:React.FunctionComponent<CategoriesProps> = React.memo(
+    ({val, onChangeCategory}) => {
+        const categories = ['All', 'Meat', 'Vegan', 'Grill', 'Hot Spice', 'Closed']
 
-    return (
-        <div className="categories">
-            <ul>
-                {categories.map((categoryName, index) => {
-                    return <li
-                        key={index.toString()}
-                        id={index.toString()}
-                        onClick={() => onChangeCategory(index)}
-                        className={Number(val) === Number(index) ? "active" : ''}>
-                        {categoryName.toString()}
-                    </li>
-                })}
-            </ul>
-        </div>
-    )
-}
+        return (
+            <div className="categories">
+                <ul>
+                    {categories.map((categoryName, index) => {
+                        return <li
+                            key={index.toString()}
+                            id={index.toString()}
+                            onClick={() => onChangeCategory(index)}
+                            className={Number(val) === Number(index) ? "active" : ''}>
+                            {categoryName.toString()}
+                        </li>
+                    })}
+                </ul>
+            </div>
+        )
+    }
+)
 
 export default Categories
